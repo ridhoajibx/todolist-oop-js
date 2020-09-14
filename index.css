@@ -10,7 +10,7 @@ a {
 }
 
 html {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Courier, monospace;
     font-size: 16px;
     color: #232323;
     background: burlywood;
@@ -64,13 +64,14 @@ button {
 }
 
 ul {
-    display: inline-block;
-    list-style: decimal-leading-zero;
+    display: block;
     margin: 15px 8px;
     text-transform: uppercase;
+    padding: 0;
 }
 
 li.item {
+    list-style: decimal-leading-zero;
     position: relative;
     line-height: 1.5rem;
     justify-content: space-between;

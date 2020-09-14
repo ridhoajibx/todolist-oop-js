@@ -7,19 +7,23 @@ const BtnAdd = document.querySelector('#btn-add'),
 class task {
     constructor(text) {
         this.text = text;
-        this.date = `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`;
+        this.date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
         this.isCompleted = false;
     }
 }
 
-class todo {
+class todos {
     constructor() {
         this.task = this.storageTodo('todo');
         this.data = this.task ? this.task : [];
         this.mode = "add";
         this.todoId = "";
 
-        if (this.data.length) {
+        if (this.data.length == "") {
+            todoList.innerHTML = `<div style="text-align: center;">
+                                    There's no todo in your list  
+                                  </div>`
+        } else {
             this.showTodo();
         }
     }
@@ -30,21 +34,22 @@ class todo {
             const { text, date, isCompleted } = this.data[i];
             todoList.innerHTML += `<li class="item">
                                 ${isCompleted ? '<span class="checked">' : ''}${text}, ${date} ${isCompleted ? '</span>' : ''}
-                                <a class="btn-edit" onclick="query.editTodo(${i})">Edit</a>
-                                <a class="btn-delete" onclick="query.deleteTodo(${i})">Delete</a>
-                                <a class="btn-edit" onclick="query.completeTodo(${i})">Complete</a>
+                                <a class="btn-edit" onclick="todo.editTodo(${i})">Edit</a>
+                                <a class="btn-delete" onclick="todo.deleteTodo(${i})">Delete</a>
+                                <a class="btn-edit" onclick="todo.completeTodo(${i})">Complete</a>
                              </li>`
         }
     }
 
     // add data
-    addTodo(event) {
-        event.preventDefault();
+    addTodo(e) {
+        e.preventDefault();
         let val = todoInput.value;
+        let todo = this.data;
         if (val === "") {
             alert(`cannot input blank todo!`)
         } else if (this.mode == "add") {
-            this.data.push(new task(val));
+            todo.push(new task(val));
         } else if (this.mode == "edit") {
             this.editedTodo(this.todoId, val);
         }
@@ -52,7 +57,7 @@ class todo {
         BtnAdd.innerHTML = "add";
         this.mode = "add";
         this.todoId = "";
-        this.storageTodo('todo', this.data, true);
+        this.storageTodo('todo', todo, true);
         this.showTodo();
         // console.log(val);
     }
@@ -60,8 +65,8 @@ class todo {
     // find index todo berfore execute
     editTodo(i) {
         let todo = this.data;
-        if (todo.isCompleted === true) {
-            alert("todo has been completed!");
+        if (todo[i].isCompleted === true) {
+            alert(`todo has been completed!, todo ${todo[i].text} cannot be edited`);
         } else {
             this.mode = "edit";
             BtnAdd.innerHTML = "edit";
@@ -73,48 +78,48 @@ class todo {
 
     // execute edit todo
     editedTodo(i, newTodo) {
-        let data = this.data;
-        data.splice(i, 1, {
-            ...data[i],
+        let todo = this.data;
+        todo.splice(i, 1, {
+            ...todo[i],
             text: newTodo
         });
     }
 
     // function to completed todo
     completeTodo(i) {
-        let data = this.data;
-        if (data[i].isCompleted === false) {
-            if (confirm(`click okay if you've been completed todo ${data[i].text} !`)) {
-                data[i].isCompleted = true;
-                this.storageTodo('todo', data, true);
+        let todo = this.data;
+        if (todo[i].isCompleted === false) {
+            if (confirm(`click okay if you've been completed todo ${todo[i].text} !`)) {
+                todo[i].isCompleted = true;
+                this.storageTodo('todo', todo, true);
             }
         } else {
-            alert(`todo ${data.text} has been completed !`)
+            alert(`todo ${todo[i].text} has been completed !`)
         }
         this.showTodo();
     }
 
-    // sort data setelah completed data nya true
+    // sort data isCompleted to be true
     sortByCompleted() {
-        let data = this.data;
-        if (data == "") {
+        let todo = this.data;
+        if (todo == "") {
             alert("you do not have any todo to sort !")
         } else {
-            data.sort(function(a, b) {
+            todo.sort(function(a, b) {
                 return (a.isCompleted - b.isCompleted);
             });
         }
-        console.log(data);
-        this.storageTodo('todo', data, true);
+        console.log(todo);
+        this.storageTodo('todo', todo, true);
         this.showTodo();
     }
 
     // delete todo
     deleteTodo(i) {
-        let data = this.data;
-        if (confirm(`Are you sure to delete todo ${data[i].text}?`)) {
-            data.splice(i, 1);
-            this.storageTodo('todo', data, true);
+        let todo = this.data;
+        if (confirm(`Are you sure to delete todo ${todo[i].text}?`)) {
+            todo.splice(i, 1);
+            this.storageTodo('todo', todo, true);
         }
         this.showTodo();
     }
@@ -130,7 +135,7 @@ class todo {
     }
 }
 
-let query = new todo;
+let todo = new todos;
 
-BtnAdd.addEventListener("click", () => query.addTodo(event));
-BtnSort.addEventListener("click", () => query.sortByCompleted());
+BtnAdd.addEventListener("click", () => todo.addTodo(event));
+BtnSort.addEventListener("click", () => todo.sortByCompleted());
