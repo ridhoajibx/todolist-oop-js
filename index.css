@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    font-family: 'VT323';
+    font-size: 22px;
+}
+
+html {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    color: #232323;
+    background: burlywood;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=text] {
+    background-color: rgb(102, 96, 96, 0.5);
+    width: 100%;
+    padding: 10px;
+    line-height: 1em;
+    border: 1px solid rgba(222, 184, 135, 0.2);
+    border-radius: 5px;
+    margin: 15px 8px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+}
+
+input[type=text]:focus {
+    outline: none;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+}
+
+button {
+    font-family: 'VT323', monospace;
+    padding: .6em 1.2em;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+ul {
+    display: inline-block;
+    list-style: decimal-leading-zero;
+    margin: 15px 8px;
+    text-transform: uppercase;
+}
+
+li.item {
+    position: relative;
+    line-height: 1.5rem;
+    justify-content: space-between;
+}
+
+li a.btn-edit {
+    color: #4e89ae;
+    cursor: pointer;
+}
+
+li a.btn-delete {
+    color: #ea5455;
+    cursor: pointer;
+}
+
+span.checked {
+    color: #1f4068;
+    text-decoration: line-through;
+}
+
+span.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #1f4068;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 1px;
+    left: -50px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+
+.sort-todo {
+    display: flex;
+    justify-content: center;
+}
